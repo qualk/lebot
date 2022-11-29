@@ -1,46 +1,58 @@
 import discord
 import os
 from dotenv import load_dotenv
-#from discord.ext.commands import Bot
 
 load_dotenv()
 
+intents = discord.Intents.default()
+intents.message_content = True
+
+client = discord.Client(intents=intents)
+
 TOKEN = os.environ.get('TOKEN')
 
-print(TOKEN)
-
-client = discord.Client(intents=discord.Intents.default())
 @client.event
 async def on_ready():
-    print('Logged in as {0.user}'.format(client))
-
+    print(f'We have logged in as {client.user}')
 
 @client.event
 async def on_message(message):
-    user_message = str(message.content)
-
     if message.author == client.user:
         return
+    
+    elif message.content.startswith('$ping'):
+        await message.channel.send('Pong!', reference=message)
 
-    if message.channel.name == 'general' or message.channel.id == os.environ.get('CHANNEL'):
-        if 'forgor' in user_message.lower():
-            await message.add_reaction('\N{skull}')
-            return
-        elif 'did i ask' in user_message.lower():
-            await message.channel.send('shut the fuck up')
-            return
-        elif 'when' in user_message.lower():
-            await message.channel.send('Did u mean wenomechaindasama?')
-            await message.channel.send(
-                file=discord.File('assets\images\wenomechainsama-dog.jpg'))
-            return
-        elif '?' in user_message.lower():
-            await message.channel.send(
-                'Teacher I suspect the answer to your question is four teacher'
-            )
-            await message.channel.send(file=discord.File('assets\images\four.jpg'))
-            return
-        else:
-            return
+    elif message.content.startswith('$your'):
+        await message.channel.send('mum', reference=message)
+        
+    elif message.content.startswith('$deez'):
+        await message.channel.send('nuts', reference=message)
+        
+    elif message.content.startswith('$skill'):
+        await message.channel.send('issue', reference=message)
+    
+    elif 'fogor' in message.content.lower():
+      await message.add_reaction('\N{skull}')
+      return
+  
+    elif 'did i ask' in message.content.lower():
+      await message.channel.send('shut the fuck up', reference=message)
+      return
+  
+    elif 'when' in message.content.lower():
+      await message.channel.send('Did u mean wenomechaindasama?', reference=message)
+      await message.channel.send(file=discord.File('assets\\images\\wenomechainsama.jpg'))
+      return
+  
+    elif '?' in message.content.lower():
+      await message.channel.send(
+        'Teacher I suspect the answer to your question is four teacher', reference=message)
+      await message.channel.send(file=discord.File('assets\\images\\four.jpg'))
+      return
+  
+    else:
+      return
 
-client.run(TOKEN)
+
+client.run('TOKEN')

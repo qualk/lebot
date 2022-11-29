@@ -1,4 +1,4 @@
-# le Bot
+# le bot
 
 A goofy ahh bot that sends dumb, overused memes on the slightest provocation. This included wenomechainsama and beast boy 4 meme.
 It is really fkn simple just watch a yt video on discord.py and you can figure out the rest.
